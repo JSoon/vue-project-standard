@@ -1,11 +1,14 @@
 // const path = require('path');
+const pkg = require('./package.json');
+
 const proxyDomain = '/';
-const {
-  NODE_ENV,
-} = process.env;
+const { NODE_ENV } = process.env;
 const NODE_ENV_DEV = 'development';
-const NODE_ENV_TEST = 'test';
+// const NODE_ENV_TEST = 'test';
 const NODE_ENV_PROD = 'production';
+
+// 设置版本信息
+process.env.VUE_APP_VERSION = pkg.version;
 
 // function resolve(dir) {
 //   return path.join(__dirname, dir);

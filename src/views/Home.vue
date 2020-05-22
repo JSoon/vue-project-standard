@@ -18,6 +18,10 @@
         },
       }"
     />
+    <div
+      data-a="ab"
+      data-b="c"
+    />
   </div>
 </template>
 
