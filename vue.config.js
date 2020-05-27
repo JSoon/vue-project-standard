@@ -1,11 +1,15 @@
-// const path = require('path');
+const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 const pkg = require('./package.json');
-
-const proxyDomain = '/';
-const { NODE_ENV } = process.env;
+const banner = require('./build/banner');
+ 
+const {
+  NODE_ENV 
+} = process.env;
 const NODE_ENV_DEV = 'development';
-// const NODE_ENV_TEST = 'test';
+const NODE_ENV_TEST = 'test';
 const NODE_ENV_PROD = 'production';
+const proxyDomain = '/';
 
 // 设置版本信息
 process.env.VUE_APP_VERSION = pkg.version;
@@ -30,7 +34,7 @@ module.exports = {
   publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
-  lintOnSave: NODE_ENV === NODE_ENV_DEV,
+  lintOnSave: NODE_ENV === NODE_ENV_DEV ? 'warning' : 'error',
   productionSourceMap: false,
   devServer: {
     port,
@@ -54,17 +58,17 @@ module.exports = {
       ignored: /node_modules/,
     },
   },
-  // https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-loader
-  // https://cli.vuejs.org/config/#css-loaderoptions
   // css: {
+  //   // https://cli.vuejs.org/guide/css.html#passing-options-to-pre-processor-loaders
   //   loaderOptions: {
-  //     sass: {
-  //       // https://css-tricks.com/how-to-import-a-sass-file-into-every-vue-component-in-an-app/
-  //       data: `@import "@/styles/shared.scss";`
-  //     }
-  //   }
+  //     scss: {
+  //       prependData: '@import "~@/assets/styles/shared.scss";',
+  //     },
+  //   },
   // },
   chainWebpack(config) {
+
+    // 配置source map
     // https://webpack.js.org/configuration/devtool/#development
     config
       .when(
@@ -74,6 +78,7 @@ module.exports = {
         },
       );
 
+    // 配置vue loader
     // set preserveWhitespace
     config.module
       .rule('vue')
@@ -85,7 +90,7 @@ module.exports = {
         return options;
       });
 
-
+    // 配置分片
     config
       .when(
         true,
@@ -120,5 +125,19 @@ module.exports = {
             });
         },
       );
+
+    // 配置模块压缩
+    config.optimization
+      .minimizer('compressjs')
+      .use(TerserPlugin, [{
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+          output: {
+            preamble: banner,
+          },
+        },
+      }]);
   },
 };
