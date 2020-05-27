@@ -2,21 +2,19 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const pkg = require('./package.json');
 const banner = require('./build/banner');
- 
+
 const {
-  NODE_ENV 
+  NODE_ENV,
 } = process.env;
 const NODE_ENV_DEV = 'development';
 const NODE_ENV_TEST = 'test';
 const NODE_ENV_PROD = 'production';
+
+const publicPath = '/';
 const proxyDomain = '/';
 
 // 设置版本信息
 process.env.VUE_APP_VERSION = pkg.version;
-
-// function resolve(dir) {
-//   return path.join(__dirname, dir);
-// }
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -31,8 +29,8 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
-  outputDir: 'dist',
+  publicPath,
+  outputDir: resolve('dist'),
   assetsDir: 'static',
   lintOnSave: NODE_ENV === NODE_ENV_DEV ? 'warning' : 'error',
   productionSourceMap: false,
@@ -67,7 +65,6 @@ module.exports = {
   //   },
   // },
   chainWebpack(config) {
-
     // 配置source map
     // https://webpack.js.org/configuration/devtool/#development
     config
@@ -141,3 +138,7 @@ module.exports = {
       }]);
   },
 };
+
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
