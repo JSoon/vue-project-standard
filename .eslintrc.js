@@ -36,7 +36,10 @@ module.exports = {
     'func-names': ['off'],
     'linebreak-style': ['off'],
     'no-unused-vars': ['warn'],
+    'no-useless-return': ['warn'],
     'no-use-before-define': ['error', 'nofunc'],
+    'no-unused-expressions': ['off'],
+    'no-param-reassign': ['warn'],
 
     // https://eslint.vuejs.org/rules/#uncategorized
     'vue/comma-dangle': ['error', 'always-multiline'],
