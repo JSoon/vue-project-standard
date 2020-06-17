@@ -40,6 +40,7 @@ module.exports = {
     'no-use-before-define': ['error', 'nofunc'],
     'no-unused-expressions': ['off'],
     'no-param-reassign': ['warn'],
+    'brace-style': ['off'],
 
     // https://eslint.vuejs.org/rules/#uncategorized
     'vue/comma-dangle': ['error', 'always-multiline'],
