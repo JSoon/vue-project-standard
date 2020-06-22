@@ -18,17 +18,22 @@ module.exports = {
     'plugin:vue/recommended',
     '@vue/airbnb',
   ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 6,
     sourceType: 'module',
+    // https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
     parser: 'babel-eslint',
   },
   rules: {
+    // #region ESLint规则
+
     // https://eslint.org/docs/rules/
     // https://eslint.org/docs/user-guide/configuring#extending-configuration-files
     'no-console': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
     'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
     'max-len': ['error', 200],
+    'comma-dangle': ['error', 'always-multiline'],
     'consistent-return': ['off'],
     'import/extensions': ['off'],
     'import/no-unresolved': ['off'],
@@ -41,6 +46,10 @@ module.exports = {
     'no-unused-expressions': ['off'],
     'no-param-reassign': ['warn'],
     'brace-style': ['off'],
+
+    // #endregion
+
+    // #region Vue ESLint规则
 
     // https://eslint.vuejs.org/rules/#uncategorized
     'vue/comma-dangle': ['error', 'always-multiline'],
@@ -56,6 +65,8 @@ module.exports = {
       ignoreProperties: true,
     }],
     'vue/eqeqeq': ['error', 'always'],
+
+    // #endregion
   },
   overrides: [{
     files: [

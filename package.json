@@ -36,6 +36,7 @@
     "lint-staged": "^10.2.4",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
+    "vue-eslint-parser": "^7.1.0",
     "vue-template-compiler": "^2.6.11"
   },
   "husky": {
@@ -44,6 +45,8 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,vue}": "eslint --cache --fix"
+    "*.{js,vue}": [
+      "vue-cli-service lint"
+    ]
   }
 }

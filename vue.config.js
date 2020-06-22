@@ -68,12 +68,9 @@ module.exports = {
     // 配置source map
     // https://webpack.js.org/configuration/devtool/#development
     config
-      .when(
-        NODE_ENV === NODE_ENV_DEV,
-        () => {
-          config.devtool('cheap-source-map');
-        },
-      );
+      .when(NODE_ENV === NODE_ENV_DEV, () => {
+        config.devtool('cheap-source-map');
+      });
 
     // 配置vue loader
     // set preserveWhitespace
@@ -89,39 +86,36 @@ module.exports = {
 
     // 配置分片
     config
-      .when(
-        true,
-        () => {
-          config
-            // https://webpack.js.org/plugins/split-chunks-plugin
-            .optimization.splitChunks({
-              chunks: 'all',
-              cacheGroups: {
-                libs: {
-                  // https://webpack.js.org/plugins/split-chunks-plugin/#splitchunksname
-                  name: NODE_ENV === NODE_ENV_PROD ? false : 'chunk-libs',
-                  test: /[\\/]node_modules[\\/]/,
-                  priority: 10,
-                  chunks: 'initial', // only package third parties that are initially dependent
-                  minSize: 200 * 1000, // 单个分片大小最小为 minSize bytes
-                  maxSize: 500 * 1000, // 超过 maxSize bytes 则进行分片
-                },
-                // elementUI: {
-                //   name: 'chunk-elementUI', // split elementUI into a single package
-                //   priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                //   test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-                // },
-                // commons: {
-                //   name: 'chunk-commons',
-                //   test: resolve('src/components'), // can customize your rules
-                //   minChunks: 3, //  minimum common number
-                //   priority: 5,
-                //   reuseExistingChunk: true
-                // }
+      .when(true, () => {
+        config
+        // https://webpack.js.org/plugins/split-chunks-plugin
+          .optimization.splitChunks({
+            chunks: 'all',
+            cacheGroups: {
+              libs: {
+                // https://webpack.js.org/plugins/split-chunks-plugin/#splitchunksname
+                name: NODE_ENV === NODE_ENV_PROD ? false : 'chunk-libs',
+                test: /[\\/]node_modules[\\/]/,
+                priority: 10,
+                chunks: 'initial', // only package third parties that are initially dependent
+                minSize: 200 * 1000, // 单个分片大小最小为 minSize bytes
+                maxSize: 500 * 1000, // 超过 maxSize bytes 则进行分片
               },
-            });
-        },
-      );
+              // elementUI: {
+              //   name: 'chunk-elementUI', // split elementUI into a single package
+              //   priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+              //   test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+              // },
+              // commons: {
+              //   name: 'chunk-commons',
+              //   test: resolve('src/components'), // can customize your rules
+              //   minChunks: 3, //  minimum common number
+              //   priority: 5,
+              //   reuseExistingChunk: true
+              // }
+            },
+          });
+      });
 
     // 配置模块压缩
     config.optimization
