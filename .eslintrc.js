@@ -21,6 +21,9 @@ module.exports = {
   parser: 'vue-eslint-parser',
   parserOptions: {
     ecmaVersion: 6,
+    ecmaFeatures: {
+      experimentalObjectRestSpread: true,
+    },
     sourceType: 'module',
     // https://eslint.vuejs.org/user-guide/#how-to-use-a-custom-parser
     parser: 'babel-eslint',
@@ -38,6 +41,7 @@ module.exports = {
     'import/extensions': ['off'],
     'import/no-unresolved': ['off'],
     'import/no-extraneous-dependencies': ['off'],
+    'import/prefer-default-export': ['off'],
     'func-names': ['off'],
     'linebreak-style': ['off'],
     'no-unused-vars': ['warn'],
@@ -70,6 +74,7 @@ module.exports = {
   },
   overrides: [{
     files: [
+      '**/tests/*.{j,t}s?(x)',
       '**/__tests__/*.{j,t}s?(x)',
       '**/tests/unit/**/*.spec.{j,t}s?(x)',
     ],
