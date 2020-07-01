@@ -33,8 +33,8 @@ module.exports = {
 
     // https://eslint.org/docs/rules/
     // https://eslint.org/docs/user-guide/configuring#extending-configuration-files
-    'no-console': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
-    'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
+    'no-console': NODE_ENV === NODE_ENV_PROD ? 'error' : 'off',
+    'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'error' : 'off',
     'max-len': ['error', 200],
     'comma-dangle': ['error', 'always-multiline'],
     'consistent-return': ['off'],

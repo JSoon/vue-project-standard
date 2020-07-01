@@ -7,11 +7,12 @@ const {
   NODE_ENV,
 } = process.env;
 const NODE_ENV_DEV = 'development';
-const NODE_ENV_TEST = 'test';
+const NODE_ENV_STAGE = 'staging';
 const NODE_ENV_PROD = 'production';
 
 const publicPath = '/';
 const proxyDomain = '/';
+const assetsPath = 'static';
 
 // 设置版本信息
 process.env.VUE_APP_VERSION = pkg.version;
@@ -31,8 +32,9 @@ module.exports = {
    */
   publicPath,
   outputDir: resolve('dist'),
-  assetsDir: 'static',
-  lintOnSave: NODE_ENV === NODE_ENV_DEV ? 'warning' : 'error',
+  assetsDir: assetsPath,
+  // lintOnSave: NODE_ENV !== NODE_ENV_PROD ? 'warning' : 'error',
+  lintOnSave: false,
   productionSourceMap: false,
   devServer: {
     port,
@@ -67,10 +69,9 @@ module.exports = {
   chainWebpack(config) {
     // 配置source map
     // https://webpack.js.org/configuration/devtool/#development
-    config
-      .when(NODE_ENV === NODE_ENV_DEV, () => {
-        config.devtool('cheap-source-map');
-      });
+    if (NODE_ENV !== NODE_ENV_PROD) {
+      config.devtool('cheap-source-map');
+    }
 
     // 配置vue loader
     // set preserveWhitespace
@@ -117,13 +118,15 @@ module.exports = {
           });
       });
 
-    // 配置模块压缩
+    // 配置模块压缩 (仅生产环境会执行)
     config.optimization
       .minimizer('compressjs')
       .use(TerserPlugin, [{
         terserOptions: {
           compress: {
+            warnings: false,
             drop_console: true,
+            drop_debugger: true,
           },
           output: {
             preamble: banner,
