@@ -69,6 +69,7 @@ module.exports = {
   chainWebpack(config) {
     // 配置source map
     // https://webpack.js.org/configuration/devtool/#development
+    // 非生产环境开启source map
     if (NODE_ENV !== NODE_ENV_PROD) {
       config.devtool('cheap-source-map');
     }
