@@ -1,13 +1,10 @@
 const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
 const pkg = require('./package.json');
 const banner = require('./build/banner');
 
 const {
   NODE_ENV,
 } = process.env;
-const NODE_ENV_DEV = 'development';
-const NODE_ENV_STAGE = 'staging';
 const NODE_ENV_PROD = 'production';
 
 const publicPath = '/';
@@ -33,8 +30,7 @@ module.exports = {
   publicPath,
   outputDir: resolve('dist'),
   assetsDir: assetsPath,
-  // lintOnSave: NODE_ENV !== NODE_ENV_PROD ? 'warning' : 'error',
-  lintOnSave: false,
+  lintOnSave: NODE_ENV !== NODE_ENV_PROD ? 'warning' : false,
   productionSourceMap: false,
   devServer: {
     port,
@@ -87,53 +83,52 @@ module.exports = {
       });
 
     // 配置分片
-    config
-      .when(true, () => {
-        config
+    if (NODE_ENV === NODE_ENV_PROD) {
+      config
         // https://webpack.js.org/plugins/split-chunks-plugin
-          .optimization.splitChunks({
-            chunks: 'all',
-            cacheGroups: {
-              libs: {
-                // https://webpack.js.org/plugins/split-chunks-plugin/#splitchunksname
-                name: NODE_ENV === NODE_ENV_PROD ? false : 'chunk-libs',
-                test: /[\\/]node_modules[\\/]/,
-                priority: 10,
-                chunks: 'initial', // only package third parties that are initially dependent
-                minSize: 200 * 1000, // 单个分片大小最小为 minSize bytes
-                maxSize: 500 * 1000, // 超过 maxSize bytes 则进行分片
-              },
-              // elementUI: {
-              //   name: 'chunk-elementUI', // split elementUI into a single package
-              //   priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-              //   test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-              // },
-              // commons: {
-              //   name: 'chunk-commons',
-              //   test: resolve('src/components'), // can customize your rules
-              //   minChunks: 3, //  minimum common number
-              //   priority: 5,
-              //   reuseExistingChunk: true
-              // }
+        .optimization.splitChunks({
+          chunks: 'all',
+          cacheGroups: {
+            libs: {
+              // https://webpack.js.org/plugins/split-chunks-plugin/#splitchunksname
+              name: NODE_ENV === NODE_ENV_PROD ? false : 'chunk-libs',
+              test: /[\\/]node_modules[\\/]/,
+              priority: 10,
+              chunks: 'initial', // only package third parties that are initially dependent
+              minSize: 200 * 1000, // 单个分片大小最小为 minSize bytes
+              maxSize: 500 * 1000, // 超过 maxSize bytes 则进行分片
             },
-          });
-      });
+            // elementUI: {
+            //   name: 'chunk-elementUI', // split elementUI into a single package
+            //   priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+            //   test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+            // },
+            // commons: {
+            //   name: 'chunk-commons',
+            //   test: resolve('src/components'), // can customize your rules
+            //   minChunks: 3, //  minimum common number
+            //   priority: 5,
+            //   reuseExistingChunk: true
+            // }
+          },
+        });
+    }
 
-    // 配置模块压缩 (仅生产环境会执行)
-    config.optimization
-      .minimizer('compressjs')
-      .use(TerserPlugin, [{
-        terserOptions: {
-          compress: {
-            warnings: false,
-            drop_console: true,
-            drop_debugger: true,
-          },
-          output: {
-            preamble: banner,
-          },
-        },
-      }]);
+    // 配置模块压缩
+    // https://cli.vuejs.org/migrating-from-v3/#chainwebpack-configurewebpack
+    if (NODE_ENV === NODE_ENV_PROD) {
+      config.optimization
+        .minimizer('terser')
+        .tap((args) => {
+          const { terserOptions } = args[0];
+          terserOptions.compress.warnings = false;
+          terserOptions.compress.drop_console = true;
+          terserOptions.compress.drop_debugger = true;
+          terserOptions.output = terserOptions.output || {};
+          terserOptions.output.preamble = banner;
+          return args;
+        });
+    }
   },
 };
 

@@ -10,6 +10,7 @@
     "serve": "vue-cli-service serve",
     "build:stage": "vue-cli-service build --mode staging",
     "build:prod": "vue-cli-service build --mode production",
+    "build:test": "vue-cli-service build --mode test",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
