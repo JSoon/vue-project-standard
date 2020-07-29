@@ -2,7 +2,7 @@ const {
   NODE_ENV,
 } = process.env;
 const NODE_ENV_DEV = 'development';
-const NODE_ENV_TEST = 'test';
+const NODE_ENV_STAGE = 'staging';
 const NODE_ENV_PROD = 'production';
 
 module.exports = {
@@ -49,7 +49,9 @@ module.exports = {
     'no-use-before-define': ['error', 'nofunc'],
     'no-unused-expressions': ['off'],
     'no-param-reassign': ['warn'],
-    'brace-style': ['off'],
+    'brace-style': ['error', 'stroustrup', {
+      allowSingleLine: true,
+    }],
 
     // #endregion
 
