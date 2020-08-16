@@ -4,10 +4,11 @@ const banner = require('./build/banner');
 
 const {
   NODE_ENV,
+  BASE_URL,
 } = process.env;
 const NODE_ENV_PROD = 'production';
 
-const publicPath = '/';
+const publicPath = BASE_URL;
 const proxyDomain = '/';
 const assetsPath = 'static';
 
