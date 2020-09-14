@@ -1,5 +1,9 @@
 <template>
   <div class="home">
+    <span>呵呵</span>
+    <div class="form-group-title">
+      卖家承诺书<span class="form-group-sub-title">对承诺书内容的意见请联系平台工作人员</span>
+    </div>
     <img
       alt="Vue logo"
       src="../assets/logo.png"

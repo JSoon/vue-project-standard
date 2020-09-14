@@ -78,8 +78,8 @@ module.exports = {
       .use('vue-loader')
       .loader('vue-loader')
       .tap((options) => {
-        // eslint-disable-next-line no-param-reassign
-        options.compilerOptions.preserveWhitespace = false;
+        // https://github.com/vuejs/vue/tree/dev/packages/vue-template-compiler#options
+        options.compilerOptions.whitespace = 'condense';
         return options;
       });
 

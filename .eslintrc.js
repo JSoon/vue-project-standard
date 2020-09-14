@@ -85,8 +85,8 @@ module.exports = {
     }],
     'vue/space-infix-ops': 'error',
     'vue/padding-line-between-blocks': ['error', 'always'],
-    'vue/singleline-html-element-content-newline': 'off',
-    'vue/multiline-html-element-content-newline': 'off',
+    // 'vue/singleline-html-element-content-newline': 'off',
+    // 'vue/multiline-html-element-content-newline': 'off',
 
     // #endregion
   },
