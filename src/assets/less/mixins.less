@@ -1,0 +1,25 @@
+// 单排文本截断(固定长度)
+.truncate(@words: '') {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  & when not (@words = '') {
+    max-width: @words;
+  }
+}
+
+// 多排文本截断
+.truncate-multiline(@line-number: 2,@width:100%, @font-size: 14, @line-height: 1.5) {
+  // https://chipcullen.com/truncating-type-at-more-than-one-line/
+  /* autoprefixer: off */
+  // 现代浏览器
+  max-width: @width;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: @line-number;
+  white-space: normal;
+  overflow: hidden;
+  // 兼容历史浏览器
+  max-height: @line-number * unit(@font-size, px) * @line-height;
+}

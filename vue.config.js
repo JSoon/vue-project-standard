@@ -55,14 +55,21 @@ module.exports = {
       ignored: /node_modules/,
     },
   },
-  // css: {
-  //   // https://cli.vuejs.org/guide/css.html#passing-options-to-pre-processor-loaders
-  //   loaderOptions: {
-  //     scss: {
-  //       prependData: '@import "~@/assets/styles/shared.scss";',
-  //     },
-  //   },
-  // },
+  css: {
+    loaderOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+  },
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'less',
+      patterns: [
+        path.resolve(__dirname, './src/assets/less/shared.less'),
+      ],
+    },
+  },
   chainWebpack(config) {
     // 配置source map
     // https://webpack.js.org/configuration/devtool/#development

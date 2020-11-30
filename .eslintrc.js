@@ -56,6 +56,7 @@ module.exports = {
     }],
     'no-irregular-whitespace': 'off',
     'no-underscore-dangle': 'off',
+    'prefer-destructuring': 'off',
 
     // #endregion
 
@@ -71,6 +72,7 @@ module.exports = {
         on: 'colon',
       },
     }],
+    'vue/no-v-html': 'off',
     'vue/no-multi-spaces': ['error', {
       ignoreProperties: true,
     }],
@@ -85,8 +87,9 @@ module.exports = {
     }],
     'vue/space-infix-ops': 'error',
     'vue/padding-line-between-blocks': ['error', 'always'],
-    // 'vue/singleline-html-element-content-newline': 'off',
-    // 'vue/multiline-html-element-content-newline': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/html-self-closing': 'off',
 
     // #endregion
   },
