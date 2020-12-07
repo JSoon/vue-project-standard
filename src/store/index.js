@@ -5,7 +5,7 @@ import common from './modules/common';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: () => ({
 
   }),
@@ -23,3 +23,7 @@ export default new Vuex.Store({
     common,
   },
 });
+
+Vue.prototype.$store = store;
+
+export default store;
