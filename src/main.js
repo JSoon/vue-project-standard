@@ -7,6 +7,11 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
+// 过滤器
+import '@/filters';
+// 枚举
+import '@/enums';
+
 Vue.config.productionTip = false;
 
 // babel测试代码

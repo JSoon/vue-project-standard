@@ -32,6 +32,7 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue';
+import { getEnumList } from '@/utils/enums';
 
 export default {
   name: 'Home',
@@ -50,6 +51,10 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    console.log(this.$enums);
+    console.log(getEnumList('ENUM_NAME'));
   },
 };
 </script>
