@@ -37,6 +37,7 @@ module.exports = {
     'no-debugger': NODE_ENV === NODE_ENV_PROD ? 'warn' : 'off',
     'max-len': ['error', 200],
     'comma-dangle': ['error', 'always-multiline'],
+    'comma-spacing': ['error', { before: false, after: true }],
     'consistent-return': 'off',
     'import/extensions': 'off',
     'import/no-cycle': 'off',
@@ -64,6 +65,7 @@ module.exports = {
 
     // https://eslint.vuejs.org/rules/#uncategorized
     'vue/comma-dangle': ['error', 'always-multiline'],
+    'vue/comma-spacing': ['error', { before: false, after: true }],
     'vue/key-spacing': ['error', {
       mode: 'strict',
       align: {
