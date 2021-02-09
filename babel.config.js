@@ -13,6 +13,7 @@ module.exports = {
     // Babel Polyfills
     // https://cli.vuejs.org/guide/browser-compatibility.html
     [
+      // 包名简写(如果包的名称以 'babel-preset-' 为前缀): '@vue/app', 极不推荐
       '@vue/babel-preset-app', {
         useBuiltIns: 'entry',
       },
