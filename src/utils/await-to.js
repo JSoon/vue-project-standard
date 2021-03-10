@@ -3,6 +3,8 @@
  *
  * @description 用于异步函数Async & Await
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function}
+ * @see {@link https://github.com/JSoon/await-to-js/blob/master/src/await-to-js.ts}
+ *
  * @example
  * let err, data, loading;
  * loading = true
@@ -12,10 +14,17 @@
  * }
  * loading = false
  *
- * @returns {Array} 包含错误对象和返回数据的数组
+ * @param   {Promise} promise
+ * @param   {object}  errorExt - Additional Information you can pass to the err object
+ * @return  {Promise}
  */
-export default function to(promise) {
+export default function to(promise, errorExt = {}) {
   return promise
     .then((data) => [null, data])
-    .catch((err) => [err]);
+    .catch((err) => {
+      if (Object.keys(errorExt).length) {
+        Object.assign(err, errorExt);
+      }
+      return [err, undefined];
+    });
 }
